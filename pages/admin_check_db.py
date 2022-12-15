@@ -192,6 +192,9 @@ elif selection == "Pull Customer Data":
         )
         # read the query into a dataframe
         df = pd.read_sql(query, connection)
+        # write the dataframe to the streamlit app
+        st.write(df)
+        connection.close()
 
     # st.write("Please enter the user ID below to pull the user data")
     # username = st.text_input("Customer ID", "")
