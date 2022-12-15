@@ -174,9 +174,9 @@ elif selection == "Customer Data":
 
 elif selection == "Pull Customer Data":
     st.header("Pull User Data")
-    # make a dropdown choice for the user to select the filtering using customer_id or customer_lastName or customer_firstName or month of join_date or cups_bought
+    # make a dropdown choice for the user to select the filtering using customer_id or customer_lastName or customer_firstName or cups_bought
     filter_choice = st.selectbox(
-        "Select a filter", ["customer_id", "customer_lastName", "customer_firstName", "month(join_date)", "cups_bought"]
+        "Select a filter", ["customer_id", "customer_lastName", "customer_firstName", "cups_bought"]
     )
     # make a text input for the user to enter the filter value
     filter_value = st.text_input("Enter the filter value", "")
