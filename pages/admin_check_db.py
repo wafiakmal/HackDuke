@@ -171,28 +171,42 @@ elif selection == "Customer Data":
     )
     st.altair_chart(customer_line_chart, use_container_width=True)
     connection.close()
+
 elif selection == "Pull Customer Data":
     st.header("Pull User Data")
-    st.write("Please enter the user ID below to pull the user data")
-    # user_id = st.text_input("User ID", "")
-    # if st.button("Pull Data"):
-    #     query = "SELECT * FROM customers_db WHERE customer_id = " + user_id
-    #     df = pd.read_sql(query, connection)
-    #     st.write(df)
-    # # give a choice of using user_name
-    username = st.text_input("Customer ID", "")
-    try:
-        if st.button("Pull Data"):
-            query = (
-                "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE customer_id = "
-                + str(username)
-            )
-            df = pd.read_sql(query, connection)
-            st.write(df)
-            connection.close()
-    except Exception as e:
-        st.write("User not found")
-        connection.close()
+    # make a dropdown choice for the user to select the filtering using customer_id or customer_lastName or customer_firstName or month of join_date or cups_bought
+    filter_choice = st.selectbox(
+        "Select a filter", ["customer_id", "customer_lastName", "customer_firstName"]
+    )
+    # make a text input for the user to enter the filter value
+    filter_value = st.text_input("Enter the filter value", "")
+    # make a button for the user to click to pull the data
+    if st.button("Pull Data"):
+        # create a query to pull the data from the database
+        query = (
+            "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE "
+            + filter_choice
+            + " = '"
+            + filter_value
+            + "'"
+        )
+        # read the query into a dataframe
+        df = pd.read_sql(query, connection)
+
+    # st.write("Please enter the user ID below to pull the user data")
+    # username = st.text_input("Customer ID", "")
+    # try:
+    #     if st.button("Pull Data"):
+    #         query = (
+    #             "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE customer_id = "
+    #             + str(username)
+    #         )
+    #         df = pd.read_sql(query, connection)
+    #         st.write(df)
+    #         connection.close()
+    # except Exception as e:
+    #     st.write("User not found")
+    #     connection.close()
 
 elif selection == "Add New Customer Data":
     today = datetime.date.today()
