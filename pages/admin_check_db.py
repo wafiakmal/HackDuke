@@ -40,64 +40,6 @@ tables = cursor.fetchall()
 tables = [table[0] for table in tables]
 
 
-def rent_cup(
-    user,
-    vendor,
-    cup,
-    database="cup_adventure",
-    username=os.getenv("AWS_USER"),
-    passwd=os.getenv("AWS_PASSWORD"),
-    hostname=os.getenv("AWS_HOST"),
-    portnum=int(os.getenv("AWS_PORT")),
-):
-    # Create Connection
-    connection = mysql.connector.connect(
-        user=username, password=passwd, host=hostname, port=portnum
-    )
-    cursor = connection.cursor()
-    cursor.execute(f"USE {database};")
-    columns = [
-        "order_id",
-        "transaction_date",
-        "customer_id",
-        "vendor_id",
-        "cup_id",
-        "transaction_status",
-        "Revenue",
-    ]
-    values = [None, date.today(), user, vendor, cup, "'Borrowed'", 0]
-    # execute query
-    try:
-        values[0] = cursor.execute(f"SELECT MAX(order_id) + 1 FROM transactions_log;")[
-            0
-        ][0]
-        values[2] = cursor.execute(
-            f"SELECT customer_id FROM customers_db WHERE user_name = '{user}';"
-        )[0][0]
-        values[3] = (
-            "'"
-            + cursor.execute(
-                f"SELECT vendor_id FROM vendors_db WHERE vendor_name = '{vendor}';"
-            )[0][0]
-            + "'"
-        )
-        cursor.execute(f"INSERT INTO transactions_log ({columns}) VALUES ({values});")
-        cursor.execute(
-            f"UPDATE customers_db SET cup_rental = '{cup}' WHERE user_name = '{user}';"
-        )
-        cursor.execute(
-            f"UPDATE cups_db SET cup_status = 'Borrowed', vendor_id = 'Out' WHERE cup_id = {cup};"
-        )
-        cursor.execute(
-            f"UPDATE vendors_db SET cup_stock = (SELECT cup_stock FROM vendors_db WHERE vendor_name = {vendor} - 1) WHERE vendor_name = {vendor};"
-        )
-        connection.commit()
-    except:
-        connection.rollback()
-    connection.close()
-    pass
-
-
 # make a sidebar with choice of different pages named "Read Data" and "Add New Data"
 st.sidebar.title("Navigation")
 selection = st.sidebar.radio(
@@ -238,11 +180,11 @@ elif selection == "Pull Customer Data":
     #     df = pd.read_sql(query, connection)
     #     st.write(df)
     # # give a choice of using user_name
-    username = st.text_input("User Name", "")
+    username = st.text_input("Customer ID", "")
     try:
         if st.button("Pull Data"):
             query = (
-                "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value, user_name FROM customers_db WHERE user_name = "
+                "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE customer_id = "
                 + str(username)
             )
             df = pd.read_sql(query, connection)
