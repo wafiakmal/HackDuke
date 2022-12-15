@@ -205,7 +205,6 @@ elif selection == "Add New Customer Data":
     cup_rental = st.text_input("Cup Code", "")
     deposit = st.text_input("Deposit", "")
     account_value = st.text_input("Account Value", 0)
-    username = st.text_input("User Name", "")
     if st.button("Add Data"):
         # check if customer_id already exists in customers_db
         query = "SELECT * FROM customers_db WHERE customer_id = " + customer_id
@@ -215,7 +214,7 @@ elif selection == "Add New Customer Data":
             connection.close()
         else:
             try:
-                query = "INSERT INTO customers_db (customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, account_value, user_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+                query = "INSERT INTO customers_db (customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, account_value) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                 val = (
                     customer_id,
                     customer_lastName,
@@ -224,7 +223,6 @@ elif selection == "Add New Customer Data":
                     cup_rental,
                     deposit,
                     account_value,
-                    username,
                 )
                 cursor.execute(query, val)
                 connection.commit()
