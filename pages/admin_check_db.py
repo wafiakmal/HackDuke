@@ -227,7 +227,7 @@ elif selection == "Customer Data":
     unique_cafe = (
         alt.Chart(df_customer_4, title="Number of Active Cafe Distributing Our Cups")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("active_vendor:Q", title="Active Vendors"))
+        .encode(x="Month:N", y=alt.Y("active_vendor:Q", title="Active Vendors", scale=alt.Scale(0, 1)))
     )
 
     query_customer_sold = "SELECT month(transaction_date) as Month, count(customer_id) as bought FROM transactions_log WHERE transaction_status = 'Bought' GROUP BY month(transaction_date)"
@@ -235,7 +235,7 @@ elif selection == "Customer Data":
     cup_sold = (
         alt.Chart(query_customer_sold, title="Cups Sold")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("bought:Q", title="Cups Sold"))
+        .encode(x="Month:N", y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(0, 1)))
     )
 
     st.altair_chart(
