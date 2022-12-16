@@ -178,12 +178,25 @@ elif selection == "Customer Data":
                             == df_customer_2["Month"].nlargest(2).iloc[-1]
                         ]["active_user"].values[0]
                     )
-                )
+                ) / (
+                        df_customer_2[
+                            df_customer_2["Month"]
+                            == df_customer_2["Month"].nlargest(2).iloc[-1]
+                        ]["active_user"].values[0]
+                    )
             )
         )
         + "%",
     )
-    col3.metric("Total Deposit", "86%", "4%")
+    col3.metric(
+        "Total Deposit",
+        "USD"+str(int(df_customer_3[
+            df_customer_3["month"] == df_customer_2["month"].nlargest(2).iloc[0]
+        ]["deposit"].values[0])),
+        str(int(df_customer_3[
+            df_customer_3["month"] == df_customer_2["month"].nlargest(2).iloc[0]
+        ]["deposit"].values[0])),
+    )
 
     customer_chart = (
         alt.Chart(df_customer_1)
