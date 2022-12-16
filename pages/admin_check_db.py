@@ -165,20 +165,24 @@ elif selection == "Customer Data":
         ),
         # calculate the percentage growth of active customer from last month
         str(
-           int(
-              (
-                  df_customer_2[
-                     df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[0]
+            int(
+                (
+                    df_customer_2[
+                        df_customer_2["Month"]
+                        == df_customer_2["Month"].nlargest(2).iloc[0]
+                    ]["active_user"].values[0]
+                    - df_customer_2[
+                        df_customer_2["Month"]
+                        == df_customer_2["Month"].nlargest(2).iloc[1]
+                    ]["active_user"].values[0]
+                )
+                / df_customer_2[
+                    df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[1]
                 ]["active_user"].values[0]
-               - df_customer_2[
-                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[1]
-            ]["active_user"].values[0]
+                * 100
+            )
         )
-        / df_customer_2[
-          df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[1]
-        ]["active_user"].values[0]
-        * 100)
-        ) +"%",
+        + "%",
     )
     col3.metric(
         "Total Deposit",
@@ -196,12 +200,14 @@ elif selection == "Customer Data":
         )
         + "%",
     )
-    
+
     st.subheader("Current User Growth Rate")
     query_growth_rate = "select month(join_date) as Month, count(customer_id) as count, (count(customer_id)-lag(count(customer_id), 1) over (order by month(join_date)))/lag(count(customer_id), 1) over (order by month(join_date)) as growth from cup_adventure.customers_db group by 1 order by 1"
     query_growth_rate = pd.read_sql(query_growth_rate, connection)
-    growth_rate=alt.Chart(query_growth_rate).mark_line().encode(x='Month:N',y='growth:Q')
-    st.altair_chart(growth_rate)
+    growth_rate = (
+        alt.Chart(query_growth_rate).mark_line().encode(x="Month:N", y="growth:Q")
+    )
+    st.altair_chart(growth_rate).properties(width=600, height=400)
 
     customer_chart = (
         alt.Chart(df_customer_1)
