@@ -163,7 +163,7 @@ elif selection == "Customer Data":
                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[-1]
             ]["active_user"].values[0]
         ),
-        (
+        str(
             df_customer_2[
                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[0]
             ]["active_user"].values[0]
