@@ -192,7 +192,16 @@ elif selection == "Customer Data":
     col3.metric(
         "Total Deposit",
         "$" + str(int(df_customer_3["Deposit"].sum())),
-        "%",
+        # calculate the percentage growth of deposit from last month
+        str(
+            int(
+                (
+                    df_customer_3["Deposit"].sort_values(ascending=False).iloc[0]
+                    - df_customer_3["Deposit"].sort_values(ascending=False).iloc[1]
+                )
+                / df_customer_3["Deposit"].sort_values(ascending=False).iloc[1]
+                * 100
+            ),
     )
 
     customer_chart = (
