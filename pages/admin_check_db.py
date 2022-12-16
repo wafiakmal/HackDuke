@@ -130,10 +130,32 @@ elif selection == "Customer Data":
     df_customer_1 = pd.read_sql(query_customer_1, connection)
     query_customer_2 = "SELECT month(transaction_date) as Month, count(distinct customer_id) as active_user FROM transactions_log WHERE transaction_status = 'Borrowed' GROUP BY month(transaction_date)"
     df_customer_2 = pd.read_sql(query_customer_2, connection)
+    # query how many deposit gained by month
+    query_customer_3 = "SELECT month(join_date) Month, sum(deposit) Deposit FROM customers_db GROUP BY month(join_date);"
+    df_customer_3 = pd.read_sql(query_customer_3, connection)
 
     st.header("Customer Data for 2022")
     st.subheader("New Users by Month")
-    # create an altair chart to show x:Month, y:new_user from df_metric_3
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric(
+        "New Customer Growth",
+        (
+            df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+            - df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+        ),
+        (
+            (
+                df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+                - df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+            )
+            / df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+            * 100
+        ),
+    )
+    col2.metric("Active Customer Growth", "9 mph", "-8%")
+    col3.metric("Total Deposit", "86%", "4%")
+
     customer_chart = (
         alt.Chart(df_customer_1)
         .mark_bar()
