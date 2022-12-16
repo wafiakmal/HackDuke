@@ -192,25 +192,12 @@ elif selection == "Customer Data":
     col3.metric(
         "Total Deposit",
         "$" + (int(df_customer_3["Deposit"][df_customer_3["Deposit"] > 0].sum())),
-        str(
-            int(
-                int(df_customer_3["Deposit"][df_customer_3["Deposit"] > 0].sum())
-                - int(
-                    df_customer_3["Deposit"][
-                        df_customer_3["Month"]
-                        != df_customer_3["Month"]
-                        .sort_values(ascending=False)
-                        .unique()[0]
-                    ]
-                ).sum()
-            )
-            / int(
-                df_customer_3["Deposit"][
-                    df_customer_3["Month"]
-                    != df_customer_3["Month"].sort_values(ascending=False).unique()[0]
-                ].sum()
-            )
-        )
+        int(
+            df_customer_3["Deposit"][
+                df_customer_3["Month"]
+                != df_customer_3["Month"].sort_values(ascending=False).unique()[0]
+            ]
+        ).sum()
         + "%",
     )
 
