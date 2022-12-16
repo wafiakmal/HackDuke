@@ -163,7 +163,11 @@ elif selection == "Customer Data":
                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[-1]
             ]["active_user"].values[0]
         ),
-        "-8%",
+        (
+            df_customer_2[
+                df_customer_2["Month"] == df_customer_2["Month"].nlargest(1).iloc[-1]
+            ]["active_user"].values[0]
+        ),
     )
     col3.metric("Total Deposit", "86%", "4%")
 
