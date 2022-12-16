@@ -176,7 +176,14 @@ elif selection == "Pull Customer Data":
     st.header("Pull User Data")
     # make a dropdown choice for the user to select the filtering using customer_id or customer_lastName or customer_firstName or cups_bought
     filter_choice = st.selectbox(
-        "Select a filter", ["customer_id", "customer_lastName", "customer_firstName", "cups_bought"]
+        "Select a filter",
+        [
+            "customer_id",
+            "customer_lastName",
+            "customer_firstName",
+            "cups_bought",
+            "month(join_date)",
+        ],
     )
     # make a text input for the user to enter the filter value
     filter_value = st.text_input("Enter the filter value", "")
@@ -184,7 +191,7 @@ elif selection == "Pull Customer Data":
     if st.button("Pull Data"):
         # create a query to pull the data from the database
         query = (
-            "SELECT customer_id, customer_lastName, customer_firstName, join_date, cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE "
+            "SELECT customer_id, customer_lastName, customer_firstName, month(join_date), cup_rental, deposit, cups_bought, account_value FROM customers_db WHERE "
             + filter_choice
             + " = '"
             + filter_value
