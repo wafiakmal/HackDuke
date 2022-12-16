@@ -206,15 +206,28 @@ elif selection == "Customer Data":
     growth_rate = (
         alt.Chart(query_growth_rate, title="Current User Growth Rate")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("growth:Q", title="User Growth", scale=alt.Scale(-1, 1)))
+        .encode(
+            x="Month:N",
+            y=alt.Y("growth:Q", title="User Growth", scale=alt.Scale(-1, 1)),
+        )
     )
 
     query_customer_unique_users_per_cup = "SELECT month(transaction_date) as Month, count(customer_id)/count(distinct cup_id) as unique_users_per_cup FROM cup_adventure.transactions_log GROUP BY month(transaction_date)"
-    query_customer_unique_users_per_cup = pd.read_sql(query_customer_unique_users_per_cup, connection)
+    query_customer_unique_users_per_cup = pd.read_sql(
+        query_customer_unique_users_per_cup, connection
+    )
     customer_unique_users_per_cup = (
         alt.Chart(query_customer_unique_users_per_cup, title="Average Users per Cup")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("unique_users_per_cup:Q", title="Unique Users per Cup", scale=alt.Scale(0, 1))))
+        .encode(
+            x="Month:N",
+            y=alt.Y(
+                "unique_users_per_cup:Q",
+                title="Unique Users per Cup",
+                scale=alt.Scale(0, 1),
+            ),
+        )
+    )
 
     st.altair_chart(
         growth_rate.properties(width=300, height=300)
@@ -227,15 +240,23 @@ elif selection == "Customer Data":
     unique_cafe = (
         alt.Chart(df_customer_4, title="Number of Active Cafe Distributing Our Cups")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("active_vendor:Q", title="Active Vendors", scale=alt.Scale(zero=False)))
+        .encode(
+            x="Month:N",
+            y=alt.Y(
+                "active_vendor:Q", title="Active Vendors", scale=alt.Scale(zero=False)
+            ),
+        )
     )
 
     query_customer_sold = "SELECT month(transaction_date) as Month, count(customer_id) as bought FROM transactions_log WHERE transaction_status = 'Bought' GROUP BY month(transaction_date)"
     query_customer_sold = pd.read_sql(query_customer_sold, connection)
     cup_sold = (
         alt.Chart(query_customer_sold, title="Cups Sold")
-        .mark_line()
-        .encode(x="Month:N", y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(zero=False)))
+        .mark_bar()
+        .encode(
+            x="Month:N",
+            y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(zero=False)),
+        )
     )
 
     st.altair_chart(
