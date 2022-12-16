@@ -255,7 +255,13 @@ elif selection == "Customer Data":
         .mark_bar()
         .encode(
             x="Month:N",
-            y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(domain=(0, 20)),
+            y=alt.Y(
+                "bought:Q",
+                title="Cups Sold",
+                scale=alt.Scale(
+                    domain=(0, 20),
+                ),
+            ),
         )
     )
 
