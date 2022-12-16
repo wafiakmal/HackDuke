@@ -243,7 +243,7 @@ elif selection == "Customer Data":
         .encode(
             x="Month:N",
             y=alt.Y(
-                "active_vendor:Q", title="Active Vendors", scale=alt.Scale(zero=False)
+                "active_vendor:Q", title="Active Vendors", scale=alt.Scale(domain=(0,7))
             ),
         )
     )
@@ -259,7 +259,7 @@ elif selection == "Customer Data":
                 "bought:Q",
                 title="Cups Sold",
                 scale=alt.Scale(
-                    domain=(0, 20),
+                    domain=(0, 10),
                 ),
             ),
         )
