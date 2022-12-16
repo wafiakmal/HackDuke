@@ -191,7 +191,7 @@ elif selection == "Customer Data":
     )
     col3.metric(
         "Total Deposit",
-        "$",
+        (df_customer_3['Deposit'][df_customer_3['Month'] == df_customer_3['Month'].sort_values(ascending=False).unique()[1]].item()),
         "as of ",
     )
 
