@@ -200,6 +200,8 @@ elif selection == "Pull Customer Data":
         # read the query into a dataframe
         df = pd.read_sql(query, connection)
         # write the dataframe to the streamlit app
+        # make a metric of how many pull data requests have been made
+        st.metric("Pull Data Requests", "1")
         st.write(df)
         connection.close()
 
