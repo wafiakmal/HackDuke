@@ -218,15 +218,17 @@ elif selection == "Customer Data":
         .encode(x="Month:N", y="unique_users_per_cup:Q")
     )
 
-    col4, col5 = st.columns(2)
-    col4 = st.altair_chart(
-        growth_rate.properties(width=300, height=300), use_container_width=True
-    )
-
-    col5 = st.altair_chart(
-        customer_unique_users_per_cup.properties(width=300, height=300),
+    # col4, col5 = st.columns(2)
+    st.altair_chart(
+        growth_rate.properties(width=300, height=300)
+        | customer_unique_users_per_cup.properties(width=300, height=300),
         use_container_width=True,
     )
+
+    # col5 = st.altair_chart(
+    #     customer_unique_users_per_cup.properties(width=300, height=300),
+    #     use_container_width=True,
+    # )
 
     customer_chart = (
         alt.Chart(df_customer_1)
