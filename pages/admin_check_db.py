@@ -255,7 +255,7 @@ elif selection == "Customer Data":
         .mark_bar()
         .encode(
             x="Month:N",
-            y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(zero=False)),
+            y=alt.Y("bought:Q", title="Cups Sold", scale=alt.Scale(1,-1)),
         )
     )
 
