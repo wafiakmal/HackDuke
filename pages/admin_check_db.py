@@ -243,7 +243,9 @@ elif selection == "Customer Data":
         .encode(
             x="Month:N",
             y=alt.Y(
-                "active_vendor:Q", title="Active Vendors", scale=alt.Scale(domain=(0,7))
+                "active_vendor:Q",
+                title="Active Vendors",
+                scale=alt.Scale(domain=(0, 4)),
             ),
         )
     )
