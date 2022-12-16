@@ -207,7 +207,9 @@ elif selection == "Customer Data":
     growth_rate = (
         alt.Chart(query_growth_rate).mark_line().encode(x="Month:N", y="growth:Q")
     )
-    st.altair_chart(growth_rate).properties(width=600, height=400)
+    st.altair_chart(
+        growth_rate.properties(width=600, height=300), use_container_width=True
+    )
 
     customer_chart = (
         alt.Chart(df_customer_1)
