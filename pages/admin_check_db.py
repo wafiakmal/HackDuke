@@ -191,7 +191,7 @@ elif selection == "Customer Data":
     )
     col3.metric(
         "Total Deposit",
-        "$" + str(df_customer_3["Deposit"].sum()),
+        "$" + str(int(df_customer_3["Deposit"].sum())),
         "%",
     )
 
