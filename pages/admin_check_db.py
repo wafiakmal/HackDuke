@@ -144,18 +144,17 @@ elif selection == "Customer Data":
             df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
             - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
         ),
+        # count the growth of new users from the previous month in percentage
         str(
-            int(
-                (
-                    df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
-                    - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
-                )
-                / df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
-                * 100
-            )
+           int(
+              (
+                  df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+                 - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
         )
-        + "%",
-    )
+              / df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
+            * 100)
+        ,
+    ))
     col2.metric(
         "Active Customer Growth",
         (
