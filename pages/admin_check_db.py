@@ -191,14 +191,7 @@ elif selection == "Customer Data":
     )
     col3.metric(
         "Total Deposit",
-        "USD"
-        + str(
-            int(
-                df_customer_3[
-                    df_customer_3["Month"] == df_customer_2["Month"].nlargest(2).iloc[0]
-                ]["Deposit"].values[0]
-            )
-        ),
+        "$",
         "as of ",
     )
 
