@@ -235,32 +235,6 @@ elif selection == "Customer Data":
         use_container_width=True,
     )
 
-    query_Circulation = "SELECT month(transaction_date) as Month, count(customer_id) as circulation FROM transactions_log WHERE transaction_status = 'Returned' GROUP BY month(transaction_date)"
-    query_Circulation = pd.read_sql(query_Circulation, connection)
-    cup_Circulation = (
-        alt.Chart(query_Circulation, title="Cups Circulation Amount Per Month")
-        .mark_line()
-        .encode(x="Month:N", y=alt.Y("circulation:Q", title="Cups Circulation Amount"))
-    )
-
-    query_customer_1 = "SELECT month(join_date) as Month, COUNT(distinct customer_id) as new_user FROM customers_db GROUP BY month(join_date);"
-    df_customer_1 = pd.read_sql(query_customer_1, connection)
-
-    query_customer_3 = "SELECT month(transaction_date) as Month, count(distinct cup_id) as unique_cup FROM transactions_log GROUP BY month(transaction_date)"
-    df_customer_3 = pd.read_sql(query_customer_3, connection)
-
-    unique = (
-        alt.Chart(df_customer_3, title="Unique Cups by Month")
-        .mark_line()
-        .encode(x="Month:N", y=alt.Y("unique_cup:Q", title="Unique Cups"))
-    )
-
-    st.altair_chart(
-        cup_Circulation.properties(width=300, height=300)
-        | unique.properties(width=300, height=300),
-        use_container_width=True,
-    )
-
     query_customer_4 = "SELECT month(transaction_date) as Month, count(distinct vendor_id) as active_vendor FROM transactions_log WHERE transaction_status = 'Borrowed' GROUP BY month(transaction_date)"
     df_customer_4 = pd.read_sql(query_customer_4, connection)
     unique_cafe = (
@@ -288,6 +262,32 @@ elif selection == "Customer Data":
     st.altair_chart(
         unique_cafe.properties(width=300, height=300)
         | cup_sold.properties(width=300, height=300),
+        use_container_width=True,
+    )
+
+    query_Circulation = "SELECT month(transaction_date) as Month, count(customer_id) as circulation FROM transactions_log WHERE transaction_status = 'Returned' GROUP BY month(transaction_date)"
+    query_Circulation = pd.read_sql(query_Circulation, connection)
+    cup_Circulation = (
+        alt.Chart(query_Circulation, title="Cups Circulation Amount Per Month")
+        .mark_line()
+        .encode(x="Month:N", y=alt.Y("circulation:Q", title="Cups Circulation Amount"))
+    )
+
+    query_customer_1 = "SELECT month(join_date) as Month, COUNT(distinct customer_id) as new_user FROM customers_db GROUP BY month(join_date);"
+    df_customer_1 = pd.read_sql(query_customer_1, connection)
+
+    query_customer_3 = "SELECT month(transaction_date) as Month, count(distinct cup_id) as unique_cup FROM transactions_log GROUP BY month(transaction_date)"
+    df_customer_3 = pd.read_sql(query_customer_3, connection)
+
+    unique = (
+        alt.Chart(df_customer_3, title="Unique Cups by Month")
+        .mark_line()
+        .encode(x="Month:N", y=alt.Y("unique_cup:Q", title="Unique Cups"))
+    )
+
+    st.altair_chart(
+        cup_Circulation.properties(width=300, height=300)
+        | unique.properties(width=300, height=300),
         use_container_width=True,
     )
 
