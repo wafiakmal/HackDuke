@@ -140,10 +140,7 @@ elif selection == "Customer Data":
     col1, col2, col3 = st.columns(3)
     col1.metric(
         "New Customer Growth",
-        str(
-            df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
-            - df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
-        ),
+        str(df_customer_1["new_user"].sort_values(ascending=False).iloc[0]),
         str(
             (
                 df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
