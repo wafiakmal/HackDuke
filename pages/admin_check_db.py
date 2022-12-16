@@ -220,8 +220,8 @@ elif selection == "Customer Data":
 
     # col4, col5 = st.columns(2)
     st.altair_chart(
-        growth_rate.properties(width=300, height=300)
-        | customer_unique_users_per_cup.properties(width=300, height=300),
+        growth_rate
+        | customer_unique_users_per_cup,
         use_container_width=True,
     )
 
