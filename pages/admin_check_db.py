@@ -206,7 +206,7 @@ elif selection == "Customer Data":
     growth_rate = (
         alt.Chart(query_growth_rate, title="Current User Growth Rate")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("growth:Q", title="User Growth", scale=alt.Scale(zero=False)))
+        .encode(x="Month:N", y=alt.Y("growth:Q", title="User Growth", scale=alt.Scale(-1, 1)))
     )
 
     query_customer_unique_users_per_cup = "SELECT month(transaction_date) as Month, count(customer_id)/count(distinct cup_id) as unique_users_per_cup FROM cup_adventure.transactions_log GROUP BY month(transaction_date)"
