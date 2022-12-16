@@ -145,13 +145,7 @@ elif selection == "Customer Data":
             - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
         ),
         (
-            (
-                df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
-                - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
-            )
-            / df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
-            * 100
-        ),
+            f"{(df_customer_1["new_user"].sort_values(ascending=False).iloc[0] - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]) / df_customer_1["new_user"].sort_values(ascending=False).iloc[1] * 100):.2f}%",
     )
     col2.metric("Active Customer Growth", "9 mph", "-8%")
     col3.metric("Total Deposit", "86%", "4%")
