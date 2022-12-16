@@ -214,7 +214,7 @@ elif selection == "Customer Data":
     customer_unique_users_per_cup = (
         alt.Chart(query_customer_unique_users_per_cup, title="Average Users per Cup")
         .mark_line()
-        .encode(x="Month:N", y=alt.Y("unique_users_per_cup:Q", title="Unique Users per Cup", scale=alt.Scale(zero=False))))
+        .encode(x="Month:N", y=alt.Y("unique_users_per_cup:Q", title="Unique Users per Cup", scale=alt.Scale(0, 1))))
 
     st.altair_chart(
         growth_rate.properties(width=300, height=300)
