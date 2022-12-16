@@ -144,17 +144,18 @@ elif selection == "Customer Data":
             df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
             - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
         ),
-        # count the growth of new users from the previous month in percentage
         str(
-           float(
-              (
-                  df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
-                 - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
+            int(
+                (
+                    df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
+                    - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
+                )
+                / df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
+                * 100
+            )
         )
-              / df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
-            * 100)
-        ,
-    ))
+        + "%",
+    )
     col2.metric(
         "Active Customer Growth",
         (
@@ -162,31 +163,22 @@ elif selection == "Customer Data":
                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[0]
             ]["active_user"].values[0]
         ),
+        # calculate the percentage growth of active customer from last month
         str(
-            int(
-                (
-                    (
-                        df_customer_2[
-                            df_customer_2["Month"]
-                            == df_customer_2["Month"].nlargest(2).iloc[0]
-                        ]["active_user"].values[0]
-                    )
-                    - (
-                        df_customer_2[
-                            df_customer_2["Month"]
-                            == df_customer_2["Month"].nlargest(2).iloc[-1]
-                        ]["active_user"].values[0]
-                    )
-                )
-                / (
-                    df_customer_2[
-                        df_customer_2["Month"]
-                        == df_customer_2["Month"].nlargest(2).iloc[-1]
-                    ]["active_user"].values[0]
-                )
-            )
+           int(
+              (
+                  df_customer_2[
+                     df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[0]
+                ]["active_user"].values[0]
+               - df_customer_2[
+                 df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[1]
+            ]["active_user"].values[0]
         )
-        + "%",
+        / df_customer_2[
+          df_customer_2["Month"] == df_customer_2["Month"].nlargest(2).iloc[1]
+        ]["active_user"].values[0]
+        * 100)
+        ) +"%",
     )
     col3.metric(
         "Total Deposit",
