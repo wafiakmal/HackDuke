@@ -146,7 +146,7 @@ elif selection == "Customer Data":
         ),
         # count the growth of new users from the previous month in percentage
         str(
-           int(
+           float(
               (
                   df_customer_1["new_user"].sort_values(ascending=False).iloc[0]
                  - df_customer_1["new_user"].sort_values(ascending=False).iloc[1]
