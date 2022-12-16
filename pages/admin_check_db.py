@@ -207,8 +207,26 @@ elif selection == "Customer Data":
     growth_rate = (
         alt.Chart(query_growth_rate).mark_line().encode(x="Month:N", y="growth:Q")
     )
-    st.altair_chart(
-        growth_rate.properties(width=600, height=300), use_container_width=True
+
+    st.subheader("Average Users per Cup")
+    query_customer_unique_users_per_cup = "SELECT month(transaction_date) as Month, count(customer_id)/count(distinct cup_id) as unique_users_per_cup FROM cup_adventure.transactions_log GROUP BY month(transaction_date)"
+    query_customer_unique_users_per_cup = pd.read_sql(
+        query_customer_unique_users_per_cup, connection
+    )
+    customer_unique_users_per_cup = (
+        alt.Chart(query_customer_unique_users_per_cup)
+        .mark_line()
+        .encode(x="Month:N", y="unique_users_per_cup:Q")
+    )
+
+    col1, col2 = st.columns(2)
+    col1 = st.altair_chart(
+        growth_rate.properties(width=300, height=300), use_container_width=True
+    )
+
+    col2 = st.altair_chart(
+        customer_unique_users_per_cup.properties(width=300, height=300),
+        use_container_width=True,
     )
 
     customer_chart = (
