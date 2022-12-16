@@ -191,8 +191,27 @@ elif selection == "Customer Data":
     )
     col3.metric(
         "Total Deposit",
-        (df_customer_3['Deposit'][df_customer_3['Month'] == df_customer_3['Month'].sort_values(ascending=False).unique()[1]].item()),
-        "as of ",
+        "$" + str(int(df_customer_3["deposit"][df_customer_3["deposit"] > 0].sum())),
+        str(
+            (
+                df_customer_3["deposit"][df_customer_3["deposit"] > 0].sum()
+                - df_customer_3["deposit"][
+                    df_customer_3["customer_id"]
+                    != df_customer_3["customer_id"]
+                    .sort_values(ascending=False)
+                    .unique()[0]
+                ].sum()
+            )
+            / (
+                df_customer_3["deposit"][
+                    df_customer_3["customer_id"]
+                    != df_customer_3["customer_id"]
+                    .sort_values(ascending=False)
+                    .unique()[0]
+                ].sum()
+            )
+        )
+        + "%",
     )
 
     customer_chart = (
