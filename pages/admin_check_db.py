@@ -199,14 +199,7 @@ elif selection == "Customer Data":
                 ]["Deposit"].values[0]
             )
         ),
-        str(
-            int(
-                df_customer_3[
-                    df_customer_3["Month"]
-                    == df_customer_2["Month"].nlargest(2).iloc[-1]
-                ]["Deposit"].values[0]
-            )
-        ),
+        "as of ",
     )
 
     customer_chart = (
