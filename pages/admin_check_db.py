@@ -131,7 +131,7 @@ elif selection == "Customer Data":
     query_customer_2 = "SELECT month(transaction_date) as Month, count(distinct customer_id) as active_user FROM transactions_log WHERE transaction_status = 'Borrowed' GROUP BY month(transaction_date)"
     df_customer_2 = pd.read_sql(query_customer_2, connection)
     # query how many deposit gained by month
-    query_customer_3 = "SELECT month(join_date) Month, sum(deposit) Deposit FROM customers_db GROUP BY month(join_date);"
+    query_customer_3 = "SELECT month(join_date) as Month, sum(deposit) as Deposit FROM customers_db GROUP BY month(join_date);"
     df_customer_3 = pd.read_sql(query_customer_3, connection)
 
     st.header("Customer Data for 2022")
