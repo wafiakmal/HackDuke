@@ -202,6 +202,7 @@ elif selection == "Customer Data":
                 / df_customer_3["Deposit"].sort_values(ascending=False).iloc[1]
                 * 100
             ),
+        ),
     )
 
     customer_chart = (
